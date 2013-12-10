@@ -32,26 +32,65 @@
   animate = {
     init: function(){
       var intervalId = window.setInterval(function(){
-        var xr = baseMatrix;
-        var zr = baseMatrix;
-        var yr = baseMatrix;
+        var xr = baseMatrix.slice(0);
+        var zr = baseMatrix.slice(0);
+        var yr = baseMatrix.slice(0);
+        var sx = baseMatrix.slice(0);
+        var sy = baseMatrix.slice(0);
+        var sa = baseMatrix.slice(0);
+        var tx = baseMatrix.slice(0);
+        var ty = baseMatrix.slice(0);
+        var tz = baseMatrix.slice(0);
+        var ta = baseMatrix.slice(0);
         if(frame <= 360){
+          // x rotation
           xr[5] = Math.cos(frame * deg);
           xr[6] = -Math.sin(frame * deg);
           xr[9] = Math.sin(frame * deg);
           xr[10] = Math.cos(frame * deg);
+          // y rotation
           yr[0] = Math.cos(frame * deg);
           yr[2] = Math.sin(frame * deg);
           yr[8] = -Math.sin(frame * deg);
           yr[10] = Math.cos(frame * deg);
+          // z rotation
           zr[0] = Math.cos(frame * deg);
           zr[1] = -Math.sin(frame * deg);
-          zr[4] = -Math.sin(frame * deg);
+          zr[4] = Math.sin(frame * deg);
           zr[5] = Math.cos(frame * deg);
+          // scale x
+          sx[0] = sx[0] + Math.sin(frame * deg);
+          // scale y
+          sy[5] = sy[5] + Math.sin(frame * deg);
+          // scale all
+          sa[0] = sa[0] + Math.sin(frame * deg);
+          sa[5] = sa[5] + Math.sin(frame * deg);
+          // translate x
+          tx[13] = tx[13] + Math.sin(frame * deg) * frame;
+          // translate y
+          ty[14] = ty[14] + Math.sin(frame * deg) * frame;
+          // translate z
+          tz[15] = tz[15] + Math.sin(frame * deg) * 1;
+          // translate all
+          ta[13] = ta[13] + -Math.sin(frame * deg) * frame;
+          ta[14] = ta[14] + Math.sin(frame * deg) * frame * .5;
+          ta[15] = ta[15] + Math.sin(frame * deg) * .5;
+//          sa[10] = sa[10] + Math.sin(frame * deg);
+//          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(m, xr) + ')';
 //          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(m, yr) + ')';
-          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(m, xr), zr), yr) + ')';
+//          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(m, zr) + ')';
+//          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(m, sx) + ')';
+//          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(m, sy) + ')';
+//          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(m, sa) + ')';
+//          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(m, ty) + ')';
+//          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(m, ta) + ')';
+//          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(matrix3dMultiply(m, xr), yr) + ')';
+//          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(matrix3dMultiply(m, xr), zr) + ')';
+//          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(matrix3dMultiply(m, zr), yr) + ')';
+//          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(m, xr), yr), zr) + ')';
+//          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(m, xr), yr), zr), sa) + ')';
+          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(m, xr), yr), zr), sa), ta) + ')';
           console.log(img.style['-webkit-transform']);
-          console.log(frame);
           frame = frame + 1;
         }else{
           window.clearInterval(intervalId);
@@ -78,7 +117,7 @@
     0, 0, 0, 1
     ];
   }else{
-    m = baseMatrix;
+    m = baseMatrix.slice(0);
   }
   console.log(m);
   img.addEventListener('click', animate.init, false);
