@@ -89,6 +89,7 @@
 //          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(matrix3dMultiply(m, zr), yr) + ')';
 //          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(m, xr), yr), zr) + ')';
 //          img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(m, xr), yr), zr), sa) + ')';
+          img.style['transform'] = 'matrix3d(' + matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(m, xr), yr), zr), sa), ta) + ')';
           img.style['-webkit-transform'] = 'matrix3d(' + matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(matrix3dMultiply(m, xr), yr), zr), sa), ta) + ')';
           console.log(img.style['-webkit-transform']);
           frame = frame + 1;
